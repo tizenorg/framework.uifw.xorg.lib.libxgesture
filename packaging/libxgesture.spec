@@ -1,9 +1,8 @@
-#sbs-git:slp/pkgs/xorg/lib/libxgesture libxgesture 0.1.0 589298a12fdb2ac318a89eb12e9afdab9aac402d
 Name:	libxgesture
 Summary:    X11 Gesture Extension library
-Version: 0.1.0
+Version:    0.1.0
 Release:    2
-Group:      System/Libraries
+Group:      Graphics/X Window System
 License:    MIT
 URL:        http://www.x.org
 Source0:    %{name}-%{version}.tar.gz

@@ -155,13 +155,6 @@ wire_to_event (Display *dpy, XEvent *event, xEvent *wire)
 
     GestureCheckExtension (dpy, info, False);
 
-#ifdef __XGESTURE_LIB_DEBUG__
-    xGestureCommonEvent *wxce = (xGestureCommonEvent *)wire;
-    fprintf(stderr, "[wire_to_event] wire->u.u.type=%d, info->codes->first_event=%d\n", 
-		wire->u.u.type, info->codes->first_event);
-    fprintf(stderr, "[wire_to_event] wxce->any.kind=%d\n", wxce->any.kind);
-#endif//__XGESTURE_LIB_DEBUG__
-
     switch (wire->u.u.type - info->codes->first_event) {
 	    case GestureNotifyGroup:
 			gev = (XGestureNotifyGroupEvent *)event;
@@ -175,19 +168,6 @@ wire_to_event (Display *dpy, XEvent *event, xEvent *wire)
 			gev->groupid = wgev->groupid;
 			gev->num_group = wgev->num_group;
 			gev->window = wgev->window;
-#ifdef __XGESTURE_LIB_DEBUG__
-			fprintf(stderr, "[wire_to_event]\n");
-			fprintf(stderr, "[ == Wire values == ]\n");
-			fprintf(stderr, "groupid=%d\n", wgev->groupid);
-			fprintf(stderr, "tap num_group=%d\n", wgev->num_group);
-			fprintf(stderr, "window=0x%x\n", wgev->window);
-			fprintf(stderr, "time=%d\n", wgev->time);
-			fprintf(stderr, "[ == Event values]\n");
-			fprintf(stderr, "groupid=%d\n", gev->groupid);
-			fprintf(stderr, "tap num_group=%d\n", gev->num_group);
-			fprintf(stderr, "window=0x%x\n", gev->window);
-			fprintf(stderr, "time=%d\n", gev->time);
-#endif//__XGESTURE_LIB_DEBUG__
 			return True;
 
 	    case GestureNotifyFlick:
@@ -205,25 +185,6 @@ wire_to_event (Display *dpy, XEvent *event, xEvent *wire)
 			fev->angle = wfev->angle;
 			fev->direction = wfev->direction;
 			fev->window = wfev->window;
-#ifdef __XGESTURE_LIB_DEBUG__
-			fprintf(stderr, "[wire_to_event]\n");
-			fprintf(stderr, "[ == Wire values == ]\n");
-			fprintf(stderr, "num of finger=%d\n", wfev->num_finger);
-			fprintf(stderr, "distance=%d\n", wfev->distance);
-			fprintf(stderr, "duration=%d\n", wfev->duration);
-			fprintf(stderr, "angle=%d\n", wfev->angle);
-			fprintf(stderr, "direction=%d\n", wfev->direction);
-			fprintf(stderr, "window=0x%x\n", wfev->window);
-			fprintf(stderr, "time=%d\n", wfev->time);
-			fprintf(stderr, "[ == Event values]\n");
-			fprintf(stderr, "num of finger=%d\n", fev->num_finger);
-			fprintf(stderr, "distance=%d\n", fev->distance);
-			fprintf(stderr, "duration=%d\n", fev->duration);
-			fprintf(stderr, "angle=%d\n", fev->angle);
-			fprintf(stderr, "direction=%d\n", fev->direction);
-			fprintf(stderr, "window=0x%x\n", fev->window);
-			fprintf(stderr, "time=%d\n", fev->time);
-#endif//__XGESTURE_LIB_DEBUG__
 			return True;
 
 	    case GestureNotifyPan:
@@ -242,25 +203,6 @@ wire_to_event (Display *dpy, XEvent *event, xEvent *wire)
 			pev->distance = wpev->distance;
 			pev->duration = wpev->duration;
 			pev->window = wpev->window;
-#ifdef __XGESTURE_LIB_DEBUG__
-			fprintf(stderr, "[wire_to_event]\n");
-			fprintf(stderr, "[ == Wire values == ]\n");
-			fprintf(stderr, "num of finger=%d\n", wpev->num_finger);
-			fprintf(stderr, "direction=%d\n", wpev->direction);
-			fprintf(stderr, "distance=%d\n", wpev->distance);
-			fprintf(stderr, "duration=%d\n", wpev->duration);
-			fprintf(stderr, "window=0x%x\n", wpev->window);
-			fprintf(stderr, "dx:%d, dy:%d\n", wpev->dx, wpev->dy);
-			fprintf(stderr, "time=%d\n", wpev->time);
-			fprintf(stderr, "[ == Event values]\n");
-			fprintf(stderr, "num of finger=%d\n", pev->num_finger);
-			fprintf(stderr, "direction=%d\n", pev->direction);
-			fprintf(stderr, "distance=%d\n", pev->distance);
-			fprintf(stderr, "duration=%d\n", pev->duration);
-			fprintf(stderr, "window=0x%x\n", pev->window);
-			fprintf(stderr, "dx:%d, dy:%d\n", pev->dx, pev->dy);
-			fprintf(stderr, "time=%d\n", pev->time);
-#endif//__XGESTURE_LIB_DEBUG__
 			return True;
 
 	    case GestureNotifyPinchRotation:
@@ -279,25 +221,6 @@ wire_to_event (Display *dpy, XEvent *event, xEvent *wire)
 			pcrev->cy = wpcrev->cy;
 			pcrev->distance = wpcrev->distance;
 			pcrev->window = wpcrev->window;
-#ifdef __XGESTURE_LIB_DEBUG__
-			fprintf(stderr, "[wire_to_event]\n");
-			fprintf(stderr, "[ == Wire values == ]\n");
-			fprintf(stderr, "num of finger=%d\n", wpcrev->num_finger);
-			fprintf(stderr, "zoom=%d\n", wpcrev->zoom);
-			fprintf(stderr, "angle=%d\n", wpcrev->angle);
-			fprintf(stderr, "distance=%d\n", wpcrev->distance);
-			fprintf(stderr, "window=0x%x\n", wpcrev->window);
-			fprintf(stderr, "cx:%d, cy:%d\n", wpcrev->cx, wpcrev->cy);
-			fprintf(stderr, "time=%d\n", wpcrev->time);
-			fprintf(stderr, "[ == Event values]\n");
-			fprintf(stderr, "num of finger=%d\n", pcrev->num_finger);
-			fprintf(stderr, "zoom=%d\n", pcrev->zoom);
-			fprintf(stderr, "angle=%d\n", pcrev->angle);
-			fprintf(stderr, "distance=%d\n", pcrev->distance);
-			fprintf(stderr, "window=0x%x\n", pcrev->window);
-			fprintf(stderr, "cx:%d, cy:%d\n", pcrev->cx, pcrev->cy);
-			fprintf(stderr, "time=%d\n", pcrev->time);
-#endif//__XGESTURE_LIB_DEBUG__
 			return True;
 
 	    case GestureNotifyTap:
@@ -315,21 +238,6 @@ wire_to_event (Display *dpy, XEvent *event, xEvent *wire)
 			tev->tap_repeat = wtev->tap_repeat;
 			tev->interval = wtev->interval;
 			tev->window = wtev->window;
-#ifdef __XGESTURE_LIB_DEBUG__
-			fprintf(stderr, "[wire_to_event]\n");
-			fprintf(stderr, "[ == Wire values == ]\n");
-			fprintf(stderr, "num of finger=%d\n", wtev->num_finger);
-			fprintf(stderr, "tap repeat=%d\n", wtev->tap_repeat);
-			fprintf(stderr, "window=0x%x\n", wtev->window);
-			fprintf(stderr, "cx:%d, cy:%d\n", wtev->cx, wtev->cy);
-			fprintf(stderr, "time=%d, interval=%d\n", wtev->time, wtev->interval);
-			fprintf(stderr, "[ == Event values]\n");
-			fprintf(stderr, "num of finger=%d\n", tev->num_finger);
-			fprintf(stderr, "tap repeat=%d\n", tev->tap_repeat);
-			fprintf(stderr, "window=0x%x\n", tev->window);
-			fprintf(stderr, "cx:%d, cy:%d\n", tev->cx, tev->cy);
-			fprintf(stderr, "time=%d, interval=%d\n", tev->time, tev->interval);
-#endif//__XGESTURE_LIB_DEBUG__
 			return True;
 
 	    case GestureNotifyTapNHold:
@@ -346,21 +254,6 @@ wire_to_event (Display *dpy, XEvent *event, xEvent *wire)
 			thev->cy = wthev->cy;
 			thev->interval = wthev->interval;
 			thev->window = wthev->window;
-#ifdef __XGESTURE_LIB_DEBUG__
-			fprintf(stderr, "[wire_to_event]\n");
-			fprintf(stderr, "[ == Wire values == ]\n");
-			fprintf(stderr, "num of finger=%d\n", wthev->num_finger);
-			fprintf(stderr, "interval=%d\n", wthev->interval);
-			fprintf(stderr, "window=0x%x\n", wthev->window);
-			fprintf(stderr, "cx:%d, cy:%d\n", wthev->cx, wthev->cy);
-			fprintf(stderr, "time=%d\n", wthev->time);
-			fprintf(stderr, "[ == Event values]\n");
-			fprintf(stderr, "num of finger=%d\n", thev->num_finger);
-			fprintf(stderr, "interval=%d\n", thev->interval);
-			fprintf(stderr, "window=0x%x\n", thev->window);
-			fprintf(stderr, "cx:%d, cy:%d\n", thev->cx, thev->cy);
-			fprintf(stderr, "time=%d\n", thev->time);
-#endif//__XGESTURE_LIB_DEBUG__
 			return True;
 
 	    case GestureNotifyHold:
@@ -377,21 +270,6 @@ wire_to_event (Display *dpy, XEvent *event, xEvent *wire)
 			hev->cy = whev->cy;
 			hev->holdtime = whev->holdtime;
 			hev->window = whev->window;
-#ifdef __XGESTURE_LIB_DEBUG__
-			fprintf(stderr, "[wire_to_event]\n");
-			fprintf(stderr, "[ == Wire values == ]\n");
-			fprintf(stderr, "num of finger=%d\n", whev->num_finger);
-			fprintf(stderr, "holdtime=%d\n", whev->holdtime);
-			fprintf(stderr, "window=0x%x\n", whev->window);
-			fprintf(stderr, "cx:%d, cy:%d\n", whev->cx, whev->cy);
-			fprintf(stderr, "time=%d\n", whev->time);
-			fprintf(stderr, "[ == Event values]\n");
-			fprintf(stderr, "num of finger=%d\n", hev->num_finger);
-			fprintf(stderr, "holdtime=%d\n", hev->holdtime);
-			fprintf(stderr, "window=0x%x\n", hev->window);
-			fprintf(stderr, "cx:%d, cy:%d\n", hev->cx, hev->cy);
-			fprintf(stderr, "time=%d\n", hev->time);
-#endif//__XGESTURE_LIB_DEBUG__
 			return True;
     }
 
@@ -419,14 +297,6 @@ event_to_wire (Display *dpy, XEvent *event, xEvent *wire)
     xGestureNotifyHoldEvent *whev;
     GestureCheckExtension (dpy, info, False);
 
-
-#ifdef __XGESTURE_LIB_DEBUG__
-    XGestureCommonEvent *xce = (XGestureCommonEvent *)event;
-    fprintf(stderr, "[event_to_wire] event->type=%d, info->codes->first_event=%d\n", 
-		event->type, info->codes->first_event);
-    fprintf(stderr, "[event_to_wire] xce->any.kind=%d\n", xce->any.kind);
-#endif//__XGESTURE_LIB_DEBUG__
-
     switch (event->type - info->codes->first_event) {
 	    case GestureNotifyGroup:
 			gev = (XGestureNotifyGroupEvent *)event;
@@ -438,19 +308,6 @@ event_to_wire (Display *dpy, XEvent *event, xEvent *wire)
 			wgev->groupid = gev->groupid;
 			wgev->num_group = gev->num_group;
 			wgev->window = gev->window;
-#ifdef __XGESTURE_LIB_DEBUG__
-			fprintf(stderr, "[wire_to_event]\n");
-			fprintf(stderr, "[ == Wire values == ]\n");
-			fprintf(stderr, "groupid=%d\n", wgev->groupid);
-			fprintf(stderr, "tap num_group=%d\n", wgev->num_group);
-			fprintf(stderr, "window=0x%x\n", wgev->window);
-			fprintf(stderr, "time=%d\n", wgev->time);
-			fprintf(stderr, "[ == Event values]\n");
-			fprintf(stderr, "groupid=%d\n", gev->groupid);
-			fprintf(stderr, "tap num_group=%d\n", gev->num_group);
-			fprintf(stderr, "window=0x%x\n", gev->window);
-			fprintf(stderr, "time=%d\n", gev->time);
-#endif//__XGESTURE_LIB_DEBUG__
 			return True;
 
 	    case GestureNotifyFlick:
@@ -466,25 +323,6 @@ event_to_wire (Display *dpy, XEvent *event, xEvent *wire)
 			wfev->duration = fev->duration;
 			wfev->angle = fev->angle;
 			wfev->direction = fev->direction;
-#ifdef __XGESTURE_LIB_DEBUG__
-			fprintf(stderr, "[wire_to_event]\n");
-			fprintf(stderr, "[ == Wire values == ]\n");
-			fprintf(stderr, "num of finger=%d\n", wfev->num_finger);
-			fprintf(stderr, "distance=%d\n", wfev->distance);
-			fprintf(stderr, "duration=%d\n", wfev->duration);
-			fprintf(stderr, "angle=%d\n", wfev->angle);
-			fprintf(stderr, "direction=%d\n", wfev->direction);
-			fprintf(stderr, "window=0x%x\n", wfev->window);
-			fprintf(stderr, "time=%d\n", wfev->time);
-			fprintf(stderr, "[ == Event values]\n");
-			fprintf(stderr, "num of finger=%d\n", fev->num_finger);
-			fprintf(stderr, "distance=%d\n", fev->distance);
-			fprintf(stderr, "duration=%d\n", fev->duration);
-			fprintf(stderr, "angle=%d\n", fev->angle);
-			fprintf(stderr, "direction=%d\n", fev->direction);
-			fprintf(stderr, "window=0x%x\n", fev->window);
-			fprintf(stderr, "time=%d\n", fev->time);
-#endif//__XGESTURE_LIB_DEBUG__
 			return True;
 
 	    case GestureNotifyPan:
@@ -501,25 +339,6 @@ event_to_wire (Display *dpy, XEvent *event, xEvent *wire)
 			wpev->direction = pev->direction;
 			wpev->dx = (short int)pev->dx;
 			wpev->dy = (short int)pev->dy;
-#ifdef __XGESTURE_LIB_DEBUG__
-			fprintf(stderr, "[wire_to_event]\n");
-			fprintf(stderr, "[ == Wire values == ]\n");
-			fprintf(stderr, "num of finger=%d\n", wpev->num_finger);
-			fprintf(stderr, "direction=%d\n", wpev->direction);
-			fprintf(stderr, "distance=%d\n", wpev->distance);
-			fprintf(stderr, "duration=%d\n", wpev->duration);
-			fprintf(stderr, "window=0x%x\n", wpev->window);
-			fprintf(stderr, "dx:%d, dy:%d\n", wpev->dx, wpev->dy);
-			fprintf(stderr, "time=%d\n", wpev->time);
-			fprintf(stderr, "[ == Event values]\n");
-			fprintf(stderr, "num of finger=%d\n", pev->num_finger);
-			fprintf(stderr, "direction=%d\n", pev->direction);
-			fprintf(stderr, "distance=%d\n", pev->distance);
-			fprintf(stderr, "duration=%d\n", pev->duration);
-			fprintf(stderr, "window=0x%x\n", pev->window);
-			fprintf(stderr, "dx:%d, dy:%d\n", pev->dx, pev->dy);
-			fprintf(stderr, "time=%d\n", pev->time);
-#endif//__XGESTURE_LIB_DEBUG__
 			return True;
 
 	    case GestureNotifyPinchRotation:
@@ -536,25 +355,6 @@ event_to_wire (Display *dpy, XEvent *event, xEvent *wire)
 			wpcrev->cx = pcrev->cx;
 			wpcrev->cy = pcrev->cy;
 			wpcrev->distance = pcrev->distance;
-#ifdef __XGESTURE_LIB_DEBUG__
-			fprintf(stderr, "[wire_to_event]\n");
-			fprintf(stderr, "[ == Wire values == ]\n");
-			fprintf(stderr, "num of finger=%d\n", wpcrev->num_finger);
-			fprintf(stderr, "zoom=%d\n", wpcrev->zoom);
-			fprintf(stderr, "angle=%d\n", wpcrev->angle);
-			fprintf(stderr, "distance=%d\n", wpcrev->distance);
-			fprintf(stderr, "window=0x%x\n", wpcrev->window);
-			fprintf(stderr, "cx:%d, cy:%d\n", wpcrev->cx, wpcrev->cy);
-			fprintf(stderr, "time=%d\n", wpcrev->time);
-			fprintf(stderr, "[ == Event values]\n");
-			fprintf(stderr, "num of finger=%d\n", pcrev->num_finger);
-			fprintf(stderr, "zoom=%d\n", pcrev->zoom);
-			fprintf(stderr, "angle=%d\n", pcrev->angle);
-			fprintf(stderr, "distance=%d\n", pcrev->distance);
-			fprintf(stderr, "window=0x%x\n", pcrev->window);
-			fprintf(stderr, "cx:%d, cy:%d\n", pcrev->cx, pcrev->cy);
-			fprintf(stderr, "time=%d\n", pcrev->time);
-#endif//__XGESTURE_LIB_DEBUG__
 			return True;
 
 	    case GestureNotifyTap:
@@ -570,21 +370,6 @@ event_to_wire (Display *dpy, XEvent *event, xEvent *wire)
 			wtev->cy = tev->cy;
 			wtev->tap_repeat = tev->tap_repeat;
 			wtev->interval = tev->interval;
-#ifdef __XGESTURE_LIB_DEBUG__
-			fprintf(stderr, "[event_to_wire]\n");
-			fprintf(stderr, "[ == Wire values == ]\n");
-			fprintf(stderr, "num of finger=%d\n", wtev->num_finger);
-			fprintf(stderr, "tap repeat=%d\n", wtev->tap_repeat);
-			fprintf(stderr, "window=0x%x\n", wtev->window);
-			fprintf(stderr, "cx:%d, cy:%d\n", wtev->cx, wtev->cy);
-			fprintf(stderr, "time=%d, interval=%d\n", wtev->time, wtev->interval);
-			fprintf(stderr, "[ == Event values]\n");
-			fprintf(stderr, "num of finger=%d\n", tev->num_finger);
-			fprintf(stderr, "tap repeat=%d\n", tev->tap_repeat);
-			fprintf(stderr, "window=0x%x\n", tev->window);
-			fprintf(stderr, "cx:%d, cy:%d\n", tev->cx, tev->cy);
-			fprintf(stderr, "time=%d, interval=%d\n", tev->time, tev->interval);
-#endif//__XGESTURE_LIB_DEBUG__
 	 		return True;
 
 	    case GestureNotifyTapNHold:
@@ -600,21 +385,6 @@ event_to_wire (Display *dpy, XEvent *event, xEvent *wire)
 			wthev->cy = thev->cy;
 			wthev->interval = thev->interval;
 			wthev->holdtime = thev->holdtime;
-#ifdef __XGESTURE_LIB_DEBUG__
-			fprintf(stderr, "[wire_to_event]\n");
-			fprintf(stderr, "[ == Wire values == ]\n");
-			fprintf(stderr, "num of finger=%d\n", wthev->num_finger);
-			fprintf(stderr, "interval=%d\n", wthev->interval);
-			fprintf(stderr, "window=0x%x\n", wthev->window);
-			fprintf(stderr, "cx:%d, cy:%d\n", wthev->cx, wthev->cy);
-			fprintf(stderr, "time=%d\n", wthev->time);
-			fprintf(stderr, "[ == Event values]\n");
-			fprintf(stderr, "num of finger=%d\n", thev->num_finger);
-			fprintf(stderr, "interval=%d\n", thev->interval);
-			fprintf(stderr, "window=0x%x\n", thev->window);
-			fprintf(stderr, "cx:%d, cy:%d\n", thev->cx, thev->cy);
-			fprintf(stderr, "time=%d\n", thev->time);
-#endif//__XGESTURE_LIB_DEBUG__
 			return True;
 
 	    case GestureNotifyHold:
@@ -629,21 +399,6 @@ event_to_wire (Display *dpy, XEvent *event, xEvent *wire)
 			whev->cx = hev->cx;
 			whev->cy = hev->cy;
 			whev->holdtime = hev->holdtime;
-#ifdef __XGESTURE_LIB_DEBUG__
-			fprintf(stderr, "[wire_to_event]\n");
-			fprintf(stderr, "[ == Wire values == ]\n");
-			fprintf(stderr, "num of finger=%d\n", whev->num_finger);
-			fprintf(stderr, "holdtime=%d\n", whev->holdtime);
-			fprintf(stderr, "window=0x%x\n", whev->window);
-			fprintf(stderr, "cx:%d, cy:%d\n", whev->cx, whev->cy);
-			fprintf(stderr, "time=%d\n", whev->time);
-			fprintf(stderr, "[ == Event values]\n");
-			fprintf(stderr, "num of finger=%d\n", hev->num_finger);
-			fprintf(stderr, "holdtime=%d\n", hev->holdtime);
-			fprintf(stderr, "window=0x%x\n", hev->window);
-			fprintf(stderr, "cx:%d, cy:%d\n", hev->cx, hev->cy);
-			fprintf(stderr, "time=%d\n", hev->time);
-#endif//__XGESTURE_LIB_DEBUG__
 			return True;
     }
 

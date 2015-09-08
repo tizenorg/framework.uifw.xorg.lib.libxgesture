@@ -1,8 +1,8 @@
 #sbs-git:slp/pkgs/xorg/lib/libXgesture libXgesture 0.1.0 589298a12fdb2ac318a89eb12e9afdab9aac402d
 Name:	libXgesture
 Summary:    X11 Gesture Extension library
-Version: 0.1.0
-Release:    2
+Version: 0.1.1
+Release:    3
 Group:      System/Libraries
 License:    MIT
 URL:        http://www.x.org
@@ -37,6 +37,9 @@ Extension to the X protocol.
 %setup -q
 
 %build
+export CFLAGS="$CFLAGS -Wno-error=implicit-function-declaration"
+export CXXFLAGS="$CXXFLAGS -Wno-error=implicit-function-declaration"
+export FFLAGS="$FFLAGS -Wno-error=implicit-function-declaration"
 
 %reconfigure --disable-static
 
@@ -44,6 +47,9 @@ make %{?jobs:-j%jobs}
 
 %install
 rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/share/license
+cp -af COPYING %{buildroot}/usr/share/license/%{name}
+
 %make_install
 
 
@@ -56,6 +62,7 @@ rm -rf %{buildroot}
 
 
 %files
+/usr/share/license/%{name}
 %{_libdir}/libXgesture.so.*
 
 %files devel

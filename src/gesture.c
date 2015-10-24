@@ -433,6 +433,10 @@ Bool XGestureQueryVersion(Display* dpy, int* majorVersion, int* minorVersion,
 
     LockDisplay(dpy);
     GetReq(GestureQueryVersion, req);
+    if (!req) {
+        TRACE("GetReq QueryVersion... return False");
+        return False;
+    }
     req->reqType = info->codes->major_opcode;
     req->gestureReqType = X_GestureQueryVersion;
     if (!_XReply(dpy, (xReply *)&rep, 0, xFalse)) {
@@ -461,6 +465,10 @@ Status XGestureSelectEvents(Display* dpy, Window w, Mask mask)
 
     LockDisplay(dpy);
     GetReq(GestureSelectEvents, req);
+    if (!req) {
+        TRACE("GetReq GetSelectedEvents... GestureGrabAbnormal");
+        return GestureGrabAbnormal;
+    }
     req->reqType = info->codes->major_opcode;
     req->gestureReqType = X_GestureSelectEvents;
     req->window = w;
@@ -485,6 +493,10 @@ Status XGestureGetSelectedEvents(Display* dpy, Window w, Mask *mask_return)
 
     LockDisplay(dpy);
     GetReq(GestureGetSelectedEvents, req);
+    if (!req) {
+        TRACE("GetReq GetSelectedEvents... GestureGrabAbnormal");
+        return GestureGrabAbnormal;
+    }
     req->reqType = info->codes->major_opcode;
     req->gestureReqType = X_GestureGetSelectedEvents;
     req->window = w;
@@ -520,6 +532,10 @@ Status XGestureGrabEvent(Display* dpy, Window w, int eventType, int num_finger, 
 
     LockDisplay(dpy);
     GetReq(GestureGrabEvent, req);
+    if (!req) {
+        TRACE("GetReq GrabEvent... return GestureGrabAbnormal");
+        return GestureGrabAbnormal;
+    }
     req->reqType = info->codes->major_opcode;
     req->gestureReqType = X_GestureGrabEvent;
     req->window = w;
@@ -569,6 +585,10 @@ Status XGestureUngrabEvent(Display* dpy, Window w, int eventType, int num_finger
 
     LockDisplay(dpy);
     GetReq(GestureUngrabEvent, req);
+    if (!req) {
+        TRACE("GetReq UngrabEvent... GestureUngrabAbnormal");
+        return GestureUngrabAbnormal;
+    }
     req->reqType = info->codes->major_opcode;
     req->gestureReqType = X_GestureUngrabEvent;
     req->window = w;
